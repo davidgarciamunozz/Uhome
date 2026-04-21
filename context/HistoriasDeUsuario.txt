@@ -1,0 +1,281 @@
+Presentación problema:
+
+Dificultad de los estudiantes universitarios para encontrar vivienda y compañeros de vivienda (roomies) de manera confiable, segura y ajustada a sus necesidades.
+
+Propuesta: Crear un sitio web como un airbnb pero con un público más Objetivo que son los estudiantes llamada Uhome.
+
+Registro de Estudiante (DETALLADO) 
+
+HU1 - Registro Estudiante
+
+Nombre completo (obligatorio)
+Correo institucional (obligatorio, validación @universidad.edu)
+Contraseña (mínimo 8 caracteres, 1 mayúscula, 1 número)
+Confirmar contraseña
+Universidad (dropdown)
+Carrera (opcional pero recomendado)
+Edad (numérico)
+Presupuesto mensual (rango: slider o input)
+Preferencias:
+Fumador / no fumador
+Mascotas (sí/no)
+Horarios (tranquilo / social)
+Botón: Registrarse
+
+Validaciones
+Correo no repetido
+Contraseña coincide
+Campos obligatorios completos
+Mostrar mensajes de error claros
+Comportamiento
+Al registrarse → redirige a inicio o perfil
+Guardar datos en base de datos
+Crear perfil inicial automáticamente
+HU2 – Registro de Propietario 
+Objetivo
+Permitir que propietarios publiquen inmuebles.
+Campos requeridos
+Nombre completo
+Correo electrónico
+Contraseña
+Número de contacto (WhatsApp recomendado)
+Tipo de propiedad:
+Habitación
+Apartamento
+Dirección aproximada
+Ciudad
+Botón: Registrarse
+Validaciones
+Igual que estudiante
+Validar teléfono (solo números)
+Comportamiento
+Redirige a dashboard de publicaciones
+Se habilita opción “Publicar vivienda”
+HU3 – Inicio de Sesión 
+Objetivo
+Permitir acceso seguro a usuarios registrados.
+Campos
+Correo electrónico
+Contraseña
+Botón: Iniciar sesión
+Validaciones
+Credenciales correctas
+Usuario existente
+Mostrar error si falla
+Funcionalidades adicionales
+“Olvidé mi contraseña”
+“Registrarse” (link)
+Recordar sesión (opcional).
+Comportamiento
+Redirigir según rol:
+Estudiante → búsqueda
+Propietario → dashboard
+HU4 – Editar Perfil 
+Objetivo
+Permitir actualizar información del usuario.
+Elementos de interfaz
+Foto de perfil (subir imagen)
+Nombre
+Correo (no editable o con verificación)
+Descripción personal
+Preferencias (roomie)
+Presupuesto
+Botón: Guardar cambios
+Validaciones
+Formato de datos correcto
+Confirmación antes de guardar
+Comportamiento
+Actualiza en tiempo real o al guardar
+Mostrar mensaje: “Cambios guardados”
+
+
+MÓDULO 2: OFERTA DE VIVIENDA
+HU5 – Publicar vivienda
+Objetivo
+Permitir al propietario crear una publicación visible.
+CAMPOS
+Título del anuncio
+Precio mensual
+Ubicación (ciudad + zona)
+Dirección aproximada
+Tipo de vivienda (habitación / apartamento)
+Número de habitaciones
+Número de baños
+Descripción
+Servicios incluidos:
+Internet
+Agua
+Luz
+Gas
+Imágenes (mínimo 1)
+BOTONES
+Subir imágenes
+Publicar
+Guardar borrador (opcional)
+Cancelar
+VALIDACIONES
+Campos obligatorios no vacíos
+Precio numérico
+Al menos 1 imagen
+Dirección válida
+No permitir publicar incompleto
+COMPORTAMIENTO
+Al hacer clic en Publicar:
+Guarda en base de datos
+La publicación aparece en búsqueda
+Muestra mensaje: “Publicación creada exitosamente”
+Guardar borrador:
+Guarda sin publicar
+
+HU6 – Buscar vivienda
+ Objetivo
+Permitir al estudiante ver opciones disponibles.
+ELEMENTOS / BOTONES
+Barra de búsqueda (ciudad / zona)
+Botón: Buscar
+Lista de resultados (cards)
+Botón en cada card: Ver detalle
+VALIDACIONES
+Mostrar mensaje si no hay resultados
+Evitar búsqueda vacía (opcional)
+COMPORTAMIENTO
+Al buscar:
+Filtra en base de datos
+Muestra lista de viviendas
+Cada resultado muestra:
+Precio
+Ubicación
+Foto
+Tipo
+HU7 – Filtrar resultados
+Objetivo
+Reducir resultados según preferencias.
+FILTROS
+Precio (rango)
+Ubicación
+Tipo de vivienda
+Servicios incluidos
+BOTONES
+Aplicar filtros
+Limpiar filtros
+COMPORTAMIENTO
+Aplicar → actualiza resultados
+Limpiar → vuelve a lista original
+
+
+MÓDULO 3: INTERACCIÓN
+HU8 – Contactar propietario o roomie
+Objetivo
+Permitir comunicación entre usuarios.
+ELEMENTOS
+Nombre del contacto
+Botón: Contactar
+Campo de mensaje
+BOTONES
+Enviar mensaje
+Ver perfil
+VALIDACIONES
+No enviar mensaje vacío
+Solo usuarios registrados pueden contactar
+COMPORTAMIENTO
+Al enviar:
+Se guarda el mensaje
+Notifica al otro usuario
+Abre chat o historial
+
+
+MÓDULO 4: COMPATIBILIDAD Y CONFIANZA
+HU9 – Crear perfil de roomie (DETALLADO)
+ Objetivo
+Permitir al estudiante definir su estilo de convivencia para encontrar compatibilidad.
+CAMPOS
+ Información básica
+Nombre (autocompletado)
+Edad
+Universidad
+Carrera (opcional)
+Preferencias de convivencia
+Fumador:
+Sí / No
+Mascotas:
+Sí / No / Indiferente
+Horarios:
+Tranquilo
+Social
+Nivel de orden:
+Alto / Medio / Bajo
+Información adicional
+Presupuesto mensual
+Tiempo de estadía (meses)
+Descripción personal
+BOTONES
+Guardar perfil
+Cancelar
+(Opcional) Editar después
+VALIDACIONES
+Campos obligatorios completos
+Presupuesto numérico
+Edad válida
+No permitir guardar vacío
+COMPORTAMIENTO
+Al hacer clic en Guardar perfil:
+Se guarda en base de datos
+Se hace visible para otros usuarios
+Muestra mensaje: “Perfil creado exitosamente”
+Permite:
+Ser encontrado en búsquedas
+Ser comparado con otros perfiles
+
+HU10 – Visualizar perfil de roomie
+Objetivo
+Evaluar compatibilidad antes de contactar.
+INFORMACIÓN
+Nombre
+Edad
+Universidad
+Preferencias:
+Fumador / no
+Mascotas
+Horarios
+Descripción
+BOTONES
+Contactar
+Volver a resultados
+
+COMPORTAMIENTO
+Muestra perfil completo
+Permite navegar entre perfiles
+
+HU11 – Calificar experiencia
+Objetivo
+Generar confianza en la plataforma.
+ELEMENTOS
+Calificación (1 a 5 estrellas ⭐)
+Comentario
+BOTONES
+Enviar calificación
+VALIDACIONES
+Solo si hubo interacción previa
+No permitir duplicados
+COMPORTAMIENTO
+Guarda calificación
+Se refleja en perfil del usuario
+
+HU12 – Reportar publicación/perfil
+ Objetivo
+Mejorar la seguridad del sistema.
+CAMPOS
+Motivo:
+Spam
+Información falsa
+Inapropiado
+Descripción
+BOTONES
+Enviar reporte
+VALIDACIONES
+Motivo obligatorio
+Usuario logueado
+COMPORTAMIENTO
+Guarda reporte
+Notifica sistema/admin
+Muestra mensaje: “Reporte enviado”

@@ -1,0 +1,233 @@
+import type { User } from '../../domain/entities/User';
+import type { Listing } from '../../domain/entities/Listing';
+import type { RoomieProfile } from '../../domain/entities/RoomieProfile';
+import type { Message } from '../../domain/entities/Message';
+import { UserRepository } from '../repositories/UserRepository';
+import { ListingRepository } from '../repositories/ListingRepository';
+import { RoomieRepository } from '../repositories/RoomieRepository';
+import { MessageRepository } from '../repositories/MessageRepository';
+
+const SEED_KEY = 'uhome_seeded';
+
+const USERS: User[] = [
+  {
+    id: 'student-1',
+    name: 'María García',
+    email: 'maria.garcia@universidad.edu',
+    password: 'Password1',
+    role: 'student',
+    university: 'Universidad Nacional',
+    career: 'Ingeniería de Sistemas',
+    age: 21,
+    budget: { min: 300000, max: 600000 },
+    preferences: { smoker: false, pets: false, schedule: 'tranquilo' },
+    description: 'Estudiante de sistemas, me gusta el orden y la tranquilidad. Busco un lugar cómodo cerca de la universidad.',
+    createdAt: '2025-01-15T10:00:00.000Z',
+  },
+  {
+    id: 'student-2',
+    name: 'Carlos Rodríguez',
+    email: 'carlos.r@javeriana.edu',
+    password: 'Password1',
+    role: 'student',
+    university: 'Pontificia Universidad Javeriana',
+    career: 'Administración de Empresas',
+    age: 22,
+    budget: { min: 400000, max: 800000 },
+    preferences: { smoker: false, pets: true, schedule: 'social' },
+    description: 'Busco roomie sociable y responsable. Tengo un perro pequeño muy amigable.',
+    createdAt: '2025-01-20T10:00:00.000Z',
+  },
+  {
+    id: 'owner-1',
+    name: 'Lucía Martínez',
+    email: 'lucia.m@gmail.com',
+    password: 'Password1',
+    role: 'owner',
+    phone: '3101234567',
+    propertyTypes: ['habitación', 'apartamento'],
+    city: 'Bogotá',
+    description: 'Propietaria de inmuebles en el norte de Bogotá. Alquilo a estudiantes universitarios.',
+    createdAt: '2025-01-10T10:00:00.000Z',
+  },
+  {
+    id: 'owner-2',
+    name: 'Jorge Peña',
+    email: 'jorge.pena@hotmail.com',
+    password: 'Password1',
+    role: 'owner',
+    phone: '3209876543',
+    propertyTypes: ['apartamento'],
+    city: 'Medellín',
+    description: 'Propietario en El Poblado, Medellín. Apartamentos bien ubicados para estudiantes.',
+    createdAt: '2025-01-12T10:00:00.000Z',
+  },
+];
+
+const LISTINGS: Listing[] = [
+  {
+    id: 'listing-1',
+    ownerId: 'owner-1',
+    ownerName: 'Lucía Martínez',
+    title: 'Habitación individual en Chapinero',
+    price: 550000,
+    city: 'Bogotá',
+    zone: 'Chapinero',
+    address: 'Cra. 7 con Calle 60',
+    type: 'habitación',
+    rooms: 1,
+    bathrooms: 1,
+    description: 'Habitación amplia y luminosa con baño compartido. A 10 min de la U Javeriana. Incluye servicios, WiFi de alta velocidad y acceso a cocina y sala común.',
+    services: { internet: true, water: true, electricity: true, gas: false },
+    images: [],
+    status: 'published',
+    createdAt: '2025-02-01T10:00:00.000Z',
+  },
+  {
+    id: 'listing-2',
+    ownerId: 'owner-1',
+    ownerName: 'Lucía Martínez',
+    title: 'Apartamento moderno en Usaquén',
+    price: 1200000,
+    city: 'Bogotá',
+    zone: 'Usaquén',
+    address: 'Calle 119 con Carrera 15',
+    type: 'apartamento',
+    rooms: 2,
+    bathrooms: 1,
+    description: 'Apartamento nuevo, bien ubicado, cerca de Unicentro. Ideal para 2 estudiantes. Piso 4 con buena vista. Parqueadero disponible.',
+    services: { internet: true, water: true, electricity: true, gas: true },
+    images: [],
+    status: 'published',
+    createdAt: '2025-02-05T10:00:00.000Z',
+  },
+  {
+    id: 'listing-3',
+    ownerId: 'owner-2',
+    ownerName: 'Jorge Peña',
+    title: 'Habitación en El Poblado, Medellín',
+    price: 480000,
+    city: 'Medellín',
+    zone: 'El Poblado',
+    address: 'Carrera 43A, El Poblado',
+    type: 'habitación',
+    rooms: 1,
+    bathrooms: 1,
+    description: 'Habitación en casa compartida de 4 estudiantes. Zona muy segura y con buena vida universitaria. A 15 min de EAFIT.',
+    services: { internet: true, water: true, electricity: false, gas: false },
+    images: [],
+    status: 'published',
+    createdAt: '2025-02-10T10:00:00.000Z',
+  },
+  {
+    id: 'listing-4',
+    ownerId: 'owner-2',
+    ownerName: 'Jorge Peña',
+    title: 'Apartamento estudio en Laureles',
+    price: 900000,
+    city: 'Medellín',
+    zone: 'Laureles',
+    address: 'Circular 73, Laureles',
+    type: 'apartamento',
+    rooms: 1,
+    bathrooms: 1,
+    description: 'Estudio completamente amoblado, cocina integrada, buena ubicación. Ideal para estudiante independiente. Cerca de la U de Medellín.',
+    services: { internet: true, water: true, electricity: true, gas: true },
+    images: [],
+    status: 'published',
+    createdAt: '2025-02-15T10:00:00.000Z',
+  },
+  {
+    id: 'listing-5',
+    ownerId: 'owner-1',
+    ownerName: 'Lucía Martínez',
+    title: 'Habitación en La Candelaria',
+    price: 380000,
+    city: 'Bogotá',
+    zone: 'La Candelaria',
+    address: 'Calle 11 con Carrera 4',
+    type: 'habitación',
+    rooms: 1,
+    bathrooms: 1,
+    description: 'Habitación económica en casa colonial restaurada. Ideal para estudiantes de la U Nacional o Externado. Zona histórica de Bogotá.',
+    services: { internet: true, water: true, electricity: true, gas: false },
+    images: [],
+    status: 'published',
+    createdAt: '2025-02-20T10:00:00.000Z',
+  },
+  {
+    id: 'listing-6',
+    ownerId: 'owner-2',
+    ownerName: 'Jorge Peña',
+    title: 'Apartamento 3 hab. en Envigado',
+    price: 1500000,
+    city: 'Medellín',
+    zone: 'Envigado',
+    address: 'Sector Mesa de Envigado',
+    type: 'apartamento',
+    rooms: 3,
+    bathrooms: 2,
+    description: 'Gran apartamento perfecto para 3 estudiantes. Zona residencial tranquila, parques cercanos, buena conexión de transporte.',
+    services: { internet: true, water: true, electricity: true, gas: true },
+    images: [],
+    status: 'published',
+    createdAt: '2025-02-25T10:00:00.000Z',
+  },
+];
+
+const ROOMIE_PROFILES: RoomieProfile[] = [
+  {
+    id: 'roomie-1',
+    userId: 'student-1',
+    name: 'María García',
+    age: 21,
+    university: 'Universidad Nacional',
+    career: 'Ingeniería de Sistemas',
+    preferences: { smoker: false, pets: 'no', schedule: 'tranquilo', order: 'alto' },
+    budget: 500000,
+    stayDuration: 12,
+    description: 'Busco roomie ordenada/o, tranquila/o. Estudio mucho en las tardes así que prefiero ambiente sin mucho ruido. Me encanta cocinar y comparto mi comida.',
+    createdAt: '2025-02-01T10:00:00.000Z',
+  },
+  {
+    id: 'roomie-2',
+    userId: 'student-2',
+    name: 'Carlos Rodríguez',
+    age: 22,
+    university: 'Pontificia Universidad Javeriana',
+    career: 'Administración de Empresas',
+    preferences: { smoker: false, pets: 'sí', schedule: 'social', order: 'medio' },
+    budget: 700000,
+    stayDuration: 6,
+    description: 'Soy social y organizado a mi manera. Tengo un perro pequeño (muy buena gente). Me gusta cocinar los fines de semana.',
+    createdAt: '2025-02-05T10:00:00.000Z',
+  },
+];
+
+const MESSAGES: Message[] = [
+  {
+    id: 'msg-1',
+    senderId: 'student-1',
+    receiverId: 'owner-1',
+    content: '¡Hola! Me interesa la habitación en Chapinero. ¿Está disponible?',
+    createdAt: '2025-03-01T10:00:00.000Z',
+    read: true,
+  },
+  {
+    id: 'msg-2',
+    senderId: 'owner-1',
+    receiverId: 'student-1',
+    content: '¡Hola María! Sí, sigue disponible. ¿Te gustaría verla este fin de semana?',
+    createdAt: '2025-03-01T11:00:00.000Z',
+    read: true,
+  },
+];
+
+export function seedIfNeeded(): void {
+  if (localStorage.getItem(SEED_KEY)) return;
+  UserRepository.seed(USERS);
+  ListingRepository.seed(LISTINGS);
+  RoomieRepository.seed(ROOMIE_PROFILES);
+  MessageRepository.seed(MESSAGES);
+  localStorage.setItem(SEED_KEY, '1');
+}
