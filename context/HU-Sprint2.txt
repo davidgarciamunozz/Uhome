@@ -1,0 +1,227 @@
+En este srpint se requiere hacer los sigueintes cambios:
+necesitamos remover las ciudades que no necesitamos, por ahora solo va a ser para la ciudad de Cali,colombia. remueve las demás.
+
+También se requiere un nuevo rol de administrador en la aplicación, con los siguientes historias de usuario , 
+siguiendo el modelo y estilo que ya tenemos en la aplicación, la información de datos por ahora va a aser dummy, el backend lo incorporaremos más 
+adelante, por ahora es para tener una referencia de como va a funcionar:
+
+MÓDULO 6 — ADMINISTRACIÓN
+
+========================================
+
+HU20 — Gestionar reportes
+Rol: Administrador
+
+Objetivo:
+Gestionar reportes enviados por usuarios.
+
+Validaciones:
+
+* Solo el administrador puede acceder
+* Confirmación antes de realizar acciones
+
+Comportamiento:
+
+* Visualizar lista de reportes
+* Eliminar publicaciones reportadas
+* Bloquear usuarios involucrados
+
+---
+
+HU21 — Moderar publicaciones
+Rol: Administrador
+
+Objetivo:
+Controlar y supervisar las publicaciones en la plataforma.
+
+Validaciones:
+
+* Solo el administrador puede acceder
+
+Comportamiento:
+
+* Ver listado de publicaciones
+* Eliminar publicaciones
+* Ocultar publicaciones
+
+---
+
+HU22 — Moderar usuarios
+Rol: Administrador
+
+Objetivo:
+Gestionar el acceso y comportamiento de los usuarios.
+
+Validaciones:
+
+* Solo el administrador puede acceder
+
+Comportamiento:
+
+* Bloquear usuarios
+* Desbloquear usuarios
+* Ver perfil de usuario
+
+---
+
+HU23 — Gestionar usuarios
+Rol: Administrador
+
+Objetivo:
+Administrar todos los usuarios del sistema.
+
+Validaciones:
+
+* Solo el administrador puede acceder
+
+Comportamiento:
+
+* Ver lista de usuarios
+* Editar información de usuarios
+* Eliminar usuarios
+
+---
+
+HU24 — Gestionar publicaciones
+Rol: Administrador
+
+Objetivo:
+Administrar todas las publicaciones del sistema.
+
+Validaciones:
+
+* Solo el administrador puede acceder
+
+Comportamiento:
+
+* Editar publicaciones
+* Ocultar publicaciones
+* Eliminar publicaciones
+
+---
+
+HU25 — Visualizar métricas
+Rol: Administrador
+
+Objetivo:
+Visualizar estadísticas generales del sistema.
+
+Validaciones:
+
+* Solo el administrador puede acceder
+
+Comportamiento:
+
+* Consultar métricas de usuarios
+* Consultar métricas de publicaciones
+* Consultar reportes
+
+---
+
+HU26 — Visualizar ingresos
+Rol: Administrador
+
+Objetivo:
+Consultar los ingresos generados por la plataforma.
+
+Validaciones:
+
+* Solo el administrador puede acceder
+
+Comportamiento:
+
+* Ver ingresos totales
+* Ver desglose de ingresos
+* Visualizar gráficas de ingresos
+
+========================================
+
+
+
+tambien para este sprint se deben realizar las sigueintes funciones:
+
+MÓDULO 3 — INTERACCIÓN ENTRE USUARIOS
+
+========================================
+
+HU11 — Calificar experiencia
+Rol: Estudiante / Propietario
+
+Objetivo:
+Permitir a los usuarios calificar su experiencia después de una interacción.
+
+Validaciones:
+
+* Solo se puede calificar si hubo interacción previa
+* No permitir calificaciones duplicadas
+* Usuario debe estar autenticado
+
+Comportamiento:
+
+* Guardar la calificación en el sistema
+* Reflejar la calificación en el perfil público del usuario
+* Mostrar promedio de calificaciones
+
+---
+
+HU12 — Reportar publicación o perfil
+Rol: Estudiante / Propietario
+
+Objetivo:
+Permitir a los usuarios reportar contenido o perfiles sospechosos.
+
+Validaciones:
+
+* Motivo del reporte obligatorio
+* Usuario debe estar autenticado
+* No permitir reportes duplicados
+
+Comportamiento:
+
+* Guardar el reporte en el sistema
+* Notificar automáticamente al administrador
+* Mostrar mensaje de confirmación
+
+========================================
+
+MÓDULO 5 — FINANCIERO Y MONETIZACIÓN
+
+========================================
+
+HU14 — Activar destaque de publicación (MVP)
+Rol: Propietario
+
+Objetivo:
+Permitir destacar publicaciones sin integración de pago (fase MVP).
+
+Validaciones:
+
+* El propietario debe tener al menos una publicación activa
+
+Comportamiento:
+
+* Activar estado de publicación destacada
+* Mostrar badge visual de "Destacado"
+* Posicionar la publicación en los primeros resultados
+
+---
+
+HU18 — Destacar anuncio (con pago)
+Rol: Propietario
+
+Objetivo:
+Permitir destacar publicaciones mediante un pago.
+
+Validaciones:
+
+* Usuario autenticado
+* Debe tener al menos una publicación activa
+* Pago debe ser válido antes de activar
+
+Comportamiento:
+
+* Proceso de pago seguro
+* Activar estado destacado
+* Mostrar fecha de vencimiento del destaque
+
+========================================

@@ -25,20 +25,20 @@ export default function HomePage() {
             <input
               type="text"
               className="hero-search-input"
-              placeholder="Ciudad, zona o universidad..."
+              placeholder="Zona, barrio o universidad..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
             <button type="submit" className="btn btn-primary btn-lg">Buscar</button>
           </form>
           <div className="hero-tags">
-            {['Bogotá', 'Medellín', 'Cali', 'Barranquilla'].map((city) => (
+            {['Granada', 'San Fernando', 'Ciudad Jardín', 'El Peñón', 'Versalles'].map((zone) => (
               <button
-                key={city}
+                key={zone}
                 className="hero-tag"
-                onClick={() => navigate(`/search?q=${city}`)}
+                onClick={() => navigate(`/search?q=${zone}`)}
               >
-                {city}
+                {zone}
               </button>
             ))}
           </div>
@@ -53,7 +53,7 @@ export default function HomePage() {
               { label: 'Viviendas disponibles', value: '500+' },
               { label: 'Estudiantes registrados', value: '2,000+' },
               { label: 'Universidades', value: '50+' },
-              { label: 'Ciudades', value: '10+' },
+              { label: 'Zonas en Cali', value: '20+' },
             ].map((s) => (
               <div key={s.label} className="stat-item">
                 <div className="stat-value">{s.value}</div>
