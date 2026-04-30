@@ -3,11 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ListingRepository } from '../../infrastructure/repositories/ListingRepository';
 import { UserRepository } from '../../infrastructure/repositories/UserRepository';
 import { reportContent } from '../../application/social/ReportContentUseCase';
+import { getUserRatingSummary } from '../../application/social/RateUserUseCase';
 import type { Listing } from '../../domain/entities/Listing';
 import type { User } from '../../domain/entities/User';
 import { useSession } from '../context/SessionContext';
 import { useToast } from '../context/ToastContext';
 import Modal from '../components/ui/Modal';
+import Stars from '../components/ui/Stars';
 import type { ReportReason } from '../../domain/entities/Report';
 
 const COP = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
@@ -19,6 +21,7 @@ export default function ListingDetailPage() {
   const [reportOpen, setReportOpen] = useState(false);
   const [reportReason, setReportReason] = useState<ReportReason>('spam');
   const [reportDesc, setReportDesc] = useState('');
+  const [ratingSummary, setRatingSummary] = useState<{ average: number; count: number }>({ average: 0, count: 0 });
   const { user } = useSession();
   const showToast = useToast();
   const navigate = useNavigate();
@@ -29,6 +32,8 @@ export default function ListingDetailPage() {
     if (!l) { navigate('/search'); return; }
     setListing(l);
     setOwner(UserRepository.findById(l.ownerId));
+    const summary = getUserRatingSummary(l.ownerId);
+    setRatingSummary({ average: summary.average, count: summary.count });
   }, [id, navigate]);
 
   const handleContact = () => {
@@ -131,14 +136,23 @@ export default function ListingDetailPage() {
           <hr className="divider" />
 
           {owner && (
-            <div className="owner-card">
-              <div className="avatar avatar-sm">
-                {owner.avatar ? <img src={owner.avatar} alt={owner.name} /> : owner.name.charAt(0)}
+            <div>
+              <div className="owner-card">
+                <div className="avatar avatar-sm">
+                  {owner.avatar ? <img src={owner.avatar} alt={owner.name} /> : owner.name.charAt(0)}
+                </div>
+                <div>
+                  <p className="text-sm text-bold">{owner.name}</p>
+                  <p className="text-xs text-gray">Propietario</p>
+                </div>
               </div>
-              <div>
-                <p className="text-sm text-bold">{owner.name}</p>
-                <p className="text-xs text-gray">Propietario</p>
-              </div>
+              {ratingSummary.count > 0 && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
+                  <Stars value={Math.round(ratingSummary.average)} size="sm" />
+                  <span className="text-sm text-bold">{ratingSummary.average}</span>
+                  <span className="text-xs text-gray">({ratingSummary.count} reseñas)</span>
+                </div>
+              )}
             </div>
           )}
 
