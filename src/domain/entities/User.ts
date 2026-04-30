@@ -1,4 +1,4 @@
-export type UserRole = 'student' | 'owner';
+export type UserRole = 'student' | 'owner' | 'admin';
 export type ScheduleType = 'tranquilo' | 'social';
 export type PetsPreference = 'sí' | 'no' | 'indiferente';
 export type OrderLevel = 'alto' | 'medio' | 'bajo';
@@ -23,6 +23,7 @@ export interface BaseUser {
   avatar?: string;
   description?: string;
   createdAt: string;
+  blocked?: boolean;
 }
 
 export interface Student extends BaseUser {
@@ -41,7 +42,11 @@ export interface Owner extends BaseUser {
   city: string;
 }
 
-export type User = Student | Owner;
+export interface Admin extends BaseUser {
+  role: 'admin';
+}
+
+export type User = Student | Owner | Admin;
 
 export function isStudent(user: User): user is Student {
   return user.role === 'student';
@@ -49,6 +54,10 @@ export function isStudent(user: User): user is Student {
 
 export function isOwner(user: User): user is Owner {
   return user.role === 'owner';
+}
+
+export function isAdmin(user: User): user is Admin {
+  return user.role === 'admin';
 }
 
 export function createStudentId(): string {

@@ -24,6 +24,9 @@ export interface Listing {
   services: ListingServices;
   images: string[];
   status: ListingStatus;
+  featured?: boolean;
+  featuredUntil?: string;
+  hidden?: boolean;
   createdAt: string;
 }
 
