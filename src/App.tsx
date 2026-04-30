@@ -15,6 +15,12 @@ import RoomiesPage from './presentation/pages/RoomiesPage';
 import RoomieProfilePage from './presentation/pages/RoomieProfilePage';
 import RoomieProfileEditPage from './presentation/pages/RoomieProfileEditPage';
 import MessagesPage from './presentation/pages/MessagesPage';
+import AdminDashboardPage from './presentation/pages/admin/AdminDashboardPage';
+import AdminReportsPage from './presentation/pages/admin/AdminReportsPage';
+import AdminListingsPage from './presentation/pages/admin/AdminListingsPage';
+import AdminUsersPage from './presentation/pages/admin/AdminUsersPage';
+import AdminMetricsPage from './presentation/pages/admin/AdminMetricsPage';
+import AdminRevenuePage from './presentation/pages/admin/AdminRevenuePage';
 
 seedIfNeeded();
 
@@ -41,6 +47,12 @@ export default function App() {
                     <Route path="/roomie/:id" element={<RoomieProfilePage />} />
                     <Route path="/roomie-profile/edit" element={<RoomieProfileEditPage />} />
                     <Route path="/messages" element={<MessagesPage />} />
+                    <Route path="/admin" element={<AdminDashboardPage />} />
+                    <Route path="/admin/reports" element={<AdminReportsPage />} />
+                    <Route path="/admin/listings" element={<AdminListingsPage />} />
+                    <Route path="/admin/users" element={<AdminUsersPage />} />
+                    <Route path="/admin/metrics" element={<AdminMetricsPage />} />
+                    <Route path="/admin/revenue" element={<AdminRevenuePage />} />
                   </Routes>
                 </Layout>
               }
