@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useSession } from '../../context/SessionContext';
-import { isOwner } from '../../../domain/entities/User';
+import { isOwner, isAdmin } from '../../../domain/entities/User';
 
 export default function Nav() {
   const { user, logout } = useSession();
@@ -22,6 +22,11 @@ export default function Nav() {
               <Link to="/roomies">Buscar roomie</Link>
               <Link to="/login" className="btn btn-outline btn-sm">Ingresar</Link>
               <Link to="/register" className="btn btn-primary btn-sm">Registrarse</Link>
+            </>
+          ) : isAdmin(user) ? (
+            <>
+              <Link to="/admin">Panel de administración</Link>
+              <button className="btn btn-outline btn-sm" onClick={handleLogout}>Salir</button>
             </>
           ) : isOwner(user) ? (
             <>
