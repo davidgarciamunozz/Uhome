@@ -30,6 +30,7 @@ export default function ListingCard({ listing }: Props) {
         <span className={`listing-type-badge badge-${listing.type === 'habitación' ? 'red' : 'dark'}`}>
           {listing.type}
         </span>
+        {listing.featured && <span className="featured-badge">⭐ Destacado</span>}
       </div>
       <div className="card-body">
         <div className="listing-price">{COP.format(listing.price)}<span className="listing-price-unit">/mes</span></div>
