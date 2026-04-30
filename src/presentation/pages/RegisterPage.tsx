@@ -41,7 +41,7 @@ export default function RegisterPage() {
   // Owner fields
   const [o, setO] = useState({
     name: '', email: '', password: '', confirmPassword: '',
-    phone: '', city: '',
+    phone: '', city: 'Cali',
     propertyTypes: [] as string[],
   });
 
@@ -220,9 +220,12 @@ export default function RegisterPage() {
               </div>
               <div className="form-group">
                 <label className="form-label">Ciudad *</label>
-                <input className={`form-input ${errors.city ? 'form-input-error' : ''}`}
-                  value={o.city} onChange={(e) => setO({ ...o, city: e.target.value })} placeholder="Bogotá" />
-                {errors.city && <p className="form-error">{errors.city}</p>}
+                <input
+                  className="form-input"
+                  value="Cali"
+                  readOnly
+                  style={{ background: 'var(--gray-100)', color: 'var(--gray-600)' }}
+                />
               </div>
             </div>
 

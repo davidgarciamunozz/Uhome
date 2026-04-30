@@ -20,7 +20,7 @@ export default function PublishPage() {
   const [images, setImages] = useState<string[]>([]);
 
   const [form, setForm] = useState({
-    title: '', price: '', city: '', zone: '', address: '',
+    title: '', price: '', city: 'Cali', zone: '', address: '',
     type: 'habitación' as Listing['type'],
     rooms: '1', bathrooms: '1', description: '',
     services: { internet: false, water: false, electricity: false, gas: false },
@@ -119,10 +119,12 @@ export default function PublishPage() {
         <div className="form-row">
           <div className="form-group">
             <label className="form-label">Ciudad *</label>
-            <input className={`form-input ${errors.city ? 'form-input-error' : ''}`}
-              value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })}
-              placeholder="Bogotá" />
-            {errors.city && <p className="form-error">{errors.city}</p>}
+            <input
+              className="form-input"
+              value="Cali"
+              readOnly
+              style={{ background: 'var(--gray-100)', color: 'var(--gray-600)' }}
+            />
           </div>
           <div className="form-group">
             <label className="form-label">Zona / Barrio</label>
