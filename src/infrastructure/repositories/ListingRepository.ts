@@ -24,7 +24,7 @@ export const ListingRepository = {
     getAll().filter((l) => l.ownerId === ownerId),
 
   findPublished: (): Listing[] =>
-    getAll().filter((l) => l.status === 'published'),
+    getAll().filter((l) => l.status === 'published' && !l.hidden),
 
   save: (listing: Listing): Listing => {
     const listings = getAll();

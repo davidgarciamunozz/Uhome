@@ -12,5 +12,9 @@ export function login(email: string, password: string): User {
     throw new ValidationError('email', 'Correo o contraseña incorrectos');
   }
 
+  if (user.blocked) {
+    throw new ValidationError('email', 'Esta cuenta ha sido bloqueada. Contacta al administrador.');
+  }
+
   return user;
 }
