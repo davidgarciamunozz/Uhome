@@ -32,3 +32,15 @@ export function getUserRatingSummary(userId: string): RatingSummary {
     ratings,
   };
 }
+
+export function editRating(ratingId: string, fromUserId: string, score: number, comment: string): void {
+  if (!score || score < 1 || score > 5) {
+    throw new ValidationError('score', 'La calificación debe ser entre 1 y 5');
+  }
+  const existing = RatingRepository.findById(ratingId);
+  if (!existing) throw new ValidationError('general', 'Calificación no encontrada');
+  if (existing.fromUserId !== fromUserId) {
+    throw new ValidationError('general', 'No puedes editar esta calificación');
+  }
+  RatingRepository.save({ ...existing, score, comment });
+}
