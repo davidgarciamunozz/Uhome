@@ -2,12 +2,14 @@ import type { User } from '../../domain/entities/User';
 import type { Listing } from '../../domain/entities/Listing';
 import type { RoomieProfile } from '../../domain/entities/RoomieProfile';
 import type { Message } from '../../domain/entities/Message';
+import type { Plan } from '../../domain/entities/Plan';
 import { UserRepository } from '../repositories/UserRepository';
 import { ListingRepository } from '../repositories/ListingRepository';
 import { RoomieRepository } from '../repositories/RoomieRepository';
 import { MessageRepository } from '../repositories/MessageRepository';
+import { PlanRepository } from '../repositories/PlanRepository';
 
-const SEED_KEY = 'uhome_seeded_v2';
+const SEED_KEY = 'uhome_seeded_v3';
 
 const USERS: User[] = [
   {
@@ -22,6 +24,7 @@ const USERS: User[] = [
     budget: { min: 300000, max: 600000 },
     preferences: { smoker: false, pets: false, schedule: 'tranquilo' },
     description: 'Estudiante de sistemas, me gusta el orden y la tranquilidad. Busco un lugar cómodo cerca de la universidad.',
+    plan: 'premium',
     createdAt: '2025-01-15T10:00:00.000Z',
   },
   {
@@ -36,6 +39,7 @@ const USERS: User[] = [
     budget: { min: 400000, max: 800000 },
     preferences: { smoker: false, pets: true, schedule: 'social' },
     description: 'Busco roomie sociable y responsable. Tengo un perro pequeño muy amigable.',
+    plan: 'free',
     createdAt: '2025-01-20T10:00:00.000Z',
   },
   {
@@ -48,6 +52,7 @@ const USERS: User[] = [
     propertyTypes: ['habitación', 'apartamento'],
     city: 'Cali',
     description: 'Propietaria de inmuebles en el norte de Cali. Alquilo a estudiantes universitarios.',
+    plan: 'premium',
     createdAt: '2025-01-10T10:00:00.000Z',
   },
   {
@@ -60,6 +65,7 @@ const USERS: User[] = [
     propertyTypes: ['apartamento'],
     city: 'Cali',
     description: 'Propietario en Ciudad Jardín, Cali. Apartamentos bien ubicados para estudiantes.',
+    plan: 'free',
     createdAt: '2025-01-12T10:00:00.000Z',
   },
   {
@@ -185,6 +191,31 @@ const LISTINGS: Listing[] = [
   },
 ];
 
+const PLANS: Plan[] = [
+  {
+    id: 'plan-free',
+    name: 'Gratuito',
+    price: 0,
+    durationDays: 0,
+    maxContacts: 3,
+    maxListings: 3,
+    canFeature: false,
+    active: true,
+    createdAt: '2025-01-01T00:00:00.000Z',
+  },
+  {
+    id: 'plan-premium',
+    name: 'Premium',
+    price: 50000,
+    durationDays: 30,
+    maxContacts: null,
+    maxListings: null,
+    canFeature: true,
+    active: true,
+    createdAt: '2025-01-01T00:00:00.000Z',
+  },
+];
+
 const ROOMIE_PROFILES: RoomieProfile[] = [
   {
     id: 'roomie-1',
@@ -237,6 +268,7 @@ export function seedIfNeeded(): void {
   if (localStorage.getItem(SEED_KEY)) return;
   UserRepository.seed(USERS);
   ListingRepository.seed(LISTINGS);
+  PlanRepository.seed(PLANS);
   RoomieRepository.seed(ROOMIE_PROFILES);
   MessageRepository.seed(MESSAGES);
   localStorage.setItem(SEED_KEY, '1');
