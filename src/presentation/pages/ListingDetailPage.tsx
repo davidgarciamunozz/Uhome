@@ -11,6 +11,9 @@ import { useToast } from '../context/ToastContext';
 import Modal from '../components/ui/Modal';
 import Stars from '../components/ui/Stars';
 import type { ReportReason } from '../../domain/entities/Report';
+import { isStudent } from '../../domain/entities/User';
+import { canContact } from '../../application/freemium/CheckContactLimitUseCase';
+import FreemiumGate from '../components/ui/FreemiumGate';
 
 const COP = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
 
@@ -22,6 +25,7 @@ export default function ListingDetailPage() {
   const [reportReason, setReportReason] = useState<ReportReason>('spam');
   const [reportDesc, setReportDesc] = useState('');
   const [ratingSummary, setRatingSummary] = useState<{ average: number; count: number }>({ average: 0, count: 0 });
+  const [freemiumMsg, setFreemiumMsg] = useState<string | null>(null);
   const { user } = useSession();
   const showToast = useToast();
   const navigate = useNavigate();
@@ -38,6 +42,15 @@ export default function ListingDetailPage() {
 
   const handleContact = () => {
     if (!user) { navigate('/login'); return; }
+    if (isStudent(user)) {
+      const check = canContact(user);
+      if (!check.allowed) {
+        setFreemiumMsg(
+          'Has alcanzado el límite de contactos del plan gratuito. Actualiza a Premium para continuar.',
+        );
+        return;
+      }
+    }
     navigate(`/messages?to=${listing?.ownerId}`);
   };
 
@@ -65,6 +78,9 @@ export default function ListingDetailPage() {
 
   return (
     <div className="container" style={{ padding: '2rem 0' }}>
+      {freemiumMsg && (
+        <FreemiumGate message={freemiumMsg} onClose={() => setFreemiumMsg(null)} />
+      )}
       <button className="btn btn-ghost btn-sm" onClick={() => navigate(-1)} style={{ marginBottom: '1.5rem' }}>
         ← Volver
       </button>
