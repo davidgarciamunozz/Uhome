@@ -1,7 +1,8 @@
 import { createListing, type Listing, type ListingStatus } from '../../domain/entities/Listing';
-import { validateRequired, validatePositiveNumber } from '../../domain/services/Validators';
+import { validateRequired, validatePositiveNumber, ValidationError } from '../../domain/services/Validators';
 import { ListingRepository } from '../../infrastructure/repositories/ListingRepository';
 import { UserRepository } from '../../infrastructure/repositories/UserRepository';
+import { canPublish } from '../freemium/CheckListingLimitUseCase';
 
 export interface PublishListingInput {
   id?: string;
@@ -31,6 +32,16 @@ export function publishListing(input: PublishListingInput, ownerId: string): Lis
   validatePositiveNumber(input.price, 'price', 'El precio');
 
   const owner = UserRepository.findById(ownerId);
+
+  if (!input.id) {
+    const limitCheck = canPublish(ownerId);
+    if (!limitCheck.allowed) {
+      throw new ValidationError(
+        'limit',
+        `Has alcanzado el máximo de ${limitCheck.limit} publicaciones activas en el plan gratuito. Actualiza a Premium para publicar más.`,
+      );
+    }
+  }
 
   if (input.id) {
     const existing = ListingRepository.findById(input.id);
