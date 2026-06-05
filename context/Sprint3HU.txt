@@ -1,0 +1,332 @@
+# BACKLOG COMPLETO
+
+## HU-01: Limitación Freemium Estudiante
+
+### Descripción
+
+Como estudiante
+Quiero tener un límite de contactos diarios en el plan gratuito
+Para acceder a más oportunidades mediante una suscripción premium.
+
+### Criterios de aceptación
+
+#### Límite diario
+
+* Estudiante en plan gratuito: máximo 3 contactos por día.
+* Estudiante en plan premium: sin límite.
+
+#### Al alcanzar el límite
+
+* Mostrar mensaje:
+  "Has alcanzado el límite de contactos del plan gratuito. Actualiza a Premium para continuar."
+* No permitir enviar más contactos.
+
+#### Al enviar contacto dentro del límite
+
+* Permitir el envío.
+* Registrar el contacto.
+* Descontar 1 cupo del día.
+
+### Subtareas
+
+1. Definir reglas del plan gratuito.
+2. Validar límite diario.
+3. Mostrar mensaje de actualización a Premium.
+4. Realizar pruebas funcionales.
+
+---
+
+## HU-02: Limitación Freemium Propietario
+
+### Descripción
+
+Como propietario
+Quiero tener un límite de publicaciones activas en el plan gratuito
+Para incentivar la contratación de un plan premium.
+
+### Criterios de aceptación
+
+#### Límite de publicaciones
+
+* Propietario en plan gratuito: máximo 3 publicaciones activas.
+* Propietario en plan premium: sin límite.
+
+#### Al superar el límite
+
+* Mostrar mensaje:
+  "Has alcanzado el máximo de publicaciones activas en el plan gratuito. Actualiza a Premium para publicar más."
+* No permitir crear una nueva publicación.
+
+#### Al crear publicación dentro del límite
+
+* Permitir la creación.
+* Marcar publicación como activa.
+
+#### Al desactivar o eliminar publicación
+
+* Liberar cupo para una nueva publicación.
+
+### Subtareas
+
+1. Definir reglas del plan gratuito para propietarios.
+2. Validar límite de publicaciones.
+3. Mostrar mensaje de actualización a Premium.
+4. Realizar pruebas funcionales.
+
+---
+
+## HU-03: Destacar Publicación
+
+### Descripción
+
+Como propietario premium
+Quiero destacar mi publicación en los resultados de búsqueda
+Para aumentar la visibilidad de mi vivienda.
+
+### Criterios de aceptación
+
+#### Requisitos
+
+* Solo propietarios con plan premium pueden destacar publicaciones.
+
+#### Al destacar
+
+* La publicación permanece destacada durante 7 días.
+* Aparece en los primeros resultados de búsqueda.
+* Muestra distintivo visual "Destacada".
+
+#### Al expirar
+
+* La publicación vuelve a su posición normal.
+* Se elimina el distintivo visual.
+
+### Subtareas
+
+1. Crear atributo de publicación destacada.
+2. Validar acceso exclusivo para usuarios premium.
+3. Implementar expiración automática a los 7 días.
+4. Priorizar publicaciones destacadas en búsquedas.
+5. Mostrar distintivo visual.
+6. Realizar pruebas funcionales.
+
+---
+
+## HU-04: Calificar Experiencia
+
+### Descripción
+
+Como usuario
+Quiero calificar a otro usuario después de una interacción
+Para ayudar a otros usuarios a tomar decisiones informadas.
+
+### Criterios de aceptación
+
+#### Restricciones
+
+* Un usuario no puede calificar dos veces la misma interacción.
+
+#### Campos de calificación
+
+* Puntuación de 1 a 5 estrellas.
+* Comentario en texto libre.
+
+#### Al calificar
+
+* Guardar la calificación.
+* Asociar la calificación al perfil del usuario evaluado.
+
+#### Visualización en perfil
+
+* Mostrar promedio de estrellas.
+* Mostrar cantidad total de calificaciones.
+
+#### Edición
+
+* Permitir editar una calificación existente.
+
+### Subtareas
+
+1. Diseñar modelo de calificaciones.
+2. Implementar creación de calificación.
+3. Validar una única calificación por interacción.
+4. Implementar edición de calificaciones.
+5. Calcular promedio de estrellas.
+6. Mostrar estadísticas en el perfil.
+7. Realizar pruebas funcionales.
+
+---
+
+## HU-05: Dashboard Administrador
+
+### Descripción
+
+Como administrador
+Quiero visualizar indicadores generales de la plataforma
+Para monitorear el estado del negocio.
+
+### Criterios de aceptación
+
+#### Indicadores
+
+* Total usuarios registrados.
+* Total estudiantes.
+* Total propietarios.
+* Total publicaciones activas.
+* Total contactos realizados.
+* Total usuarios premium.
+
+#### Acceso
+
+* Solo usuarios con rol administrador.
+
+#### Sin datos
+
+* Mostrar "0" o "Sin datos disponibles".
+
+#### Actualización
+
+* Actualizar indicadores cada 5 minutos.
+
+#### Filtros
+
+* Permitir filtrar por rango de fechas.
+
+### Subtareas
+
+1. Crear vista Dashboard.
+2. Implementar control de acceso administrador.
+3. Obtener métricas de usuarios.
+4. Obtener métricas de publicaciones.
+5. Obtener métricas de contactos.
+6. Obtener métricas de suscripciones premium.
+7. Implementar filtro por fechas.
+8. Configurar actualización automática.
+9. Realizar pruebas funcionales.
+
+---
+
+## HU-06: Gestión de Usuarios
+
+### Descripción
+
+Como administrador
+Quiero consultar los usuarios registrados
+Para realizar seguimiento y control de la plataforma.
+
+### Criterios de aceptación
+
+#### Listado de usuarios
+
+Mostrar:
+
+* Nombre.
+* Email.
+* Rol.
+* Plan.
+* Fecha de registro.
+* Estado.
+
+### Subtareas
+
+1. Crear listado de usuarios.
+2. Consultar información de usuarios.
+3. Mostrar rol y plan.
+4. Mostrar estado de cuenta.
+5. Implementar paginación.
+6. Implementar búsqueda y filtros.
+7. Realizar pruebas funcionales.
+
+---
+
+## HU-07: Visualizar Ingresos
+
+### Descripción
+
+Como administrador
+Quiero visualizar los ingresos generados por suscripciones
+Para evaluar la rentabilidad del negocio.
+
+### Criterios de aceptación
+
+#### Información mostrada
+
+* Suscripciones activas.
+* Ingreso mensual.
+* Ingreso acumulado.
+* Plan más vendido.
+
+### Subtareas
+
+1. Calcular suscripciones activas.
+2. Calcular ingreso mensual.
+3. Calcular ingreso acumulado.
+4. Identificar plan más vendido.
+5. Crear vista de ingresos.
+6. Realizar pruebas funcionales.
+
+---
+
+## HU-08: Gestión de Planes
+
+### Descripción
+
+Como administrador
+Quiero crear y modificar planes de suscripción
+Para adaptar la estrategia comercial de la plataforma.
+
+### Criterios de aceptación
+
+#### Listado de planes
+
+Mostrar:
+
+* Nombre.
+* Precio.
+* Duración.
+* Beneficios.
+
+#### Crear plan
+
+Campos obligatorios:
+
+* Nombre.
+* Precio.
+* Duración.
+
+Beneficios configurables:
+
+* Límite de contactos.
+* Límite de publicaciones.
+
+Al guardar:
+
+* El plan aparece disponible para suscripción.
+
+#### Editar plan
+
+* Modificar precio.
+* Modificar duración.
+* Modificar beneficios.
+* Los cambios aplican únicamente a nuevos suscriptores.
+
+#### Deshabilitar plan
+
+* Impedir nuevas suscripciones.
+* Mantener activas las suscripciones existentes.
+
+#### Eliminar plan
+
+* No permitir eliminación si existen suscripciones activas.
+* Mostrar mensaje de error correspondiente.
+
+### Subtareas
+
+1. Diseñar modelo de planes.
+2. Crear listado de planes.
+3. Implementar creación de planes.
+4. Implementar edición de planes.
+5. Implementar deshabilitación de planes.
+6. Validar eliminación de planes.
+7. Gestionar beneficios configurables.
+8. Mantener compatibilidad con suscripciones activas.
+9. Realizar pruebas funcionales.
