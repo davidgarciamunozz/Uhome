@@ -34,6 +34,15 @@ export const MessageRepository = {
     return [...partners];
   },
 
+  getInitiatedPartnerIds: (userId: string): string[] => {
+    const messages = getAll();
+    const partners = new Set<string>();
+    messages.forEach((m) => {
+      if (m.senderId === userId) partners.add(m.receiverId);
+    });
+    return [...partners];
+  },
+
   save: (message: Message): Message => {
     const messages = getAll();
     messages.push(message);

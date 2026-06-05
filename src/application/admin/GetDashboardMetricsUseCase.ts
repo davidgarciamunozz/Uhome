@@ -24,7 +24,7 @@ export function getDashboardMetrics(): DashboardMetrics {
   const reports = ReportRepository.findAll();
   const students = users.filter((u) => u.role === 'student');
   const totalContacts = students.reduce(
-    (sum, s) => sum + MessageRepository.getPartnerIds(s.id).length,
+    (sum, s) => sum + MessageRepository.getInitiatedPartnerIds(s.id).length,
     0,
   );
 

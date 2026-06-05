@@ -4,7 +4,8 @@ import { UserRepository } from '../../infrastructure/repositories/UserRepository
 const FREE_DAILY_LIMIT = 3;
 
 function todayString(): string {
-  return new Date().toISOString().slice(0, 10);
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
 export function canContact(student: Student): { allowed: boolean; remaining: number } {
