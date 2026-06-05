@@ -15,11 +15,19 @@ function saveAll(ratings: Rating[]): void {
 }
 
 export const RatingRepository = {
+  findAll: (): Rating[] => getAll(),
+
   findForUser: (userId: string): Rating[] =>
     getAll().filter((r) => r.toUserId === userId),
 
+  findByFromUser: (userId: string): Rating[] =>
+    getAll().filter((r) => r.fromUserId === userId),
+
   findByUsers: (fromId: string, toId: string): Rating | null =>
     getAll().find((r) => r.fromUserId === fromId && r.toUserId === toId) ?? null,
+
+  findById: (id: string): Rating | null =>
+    getAll().find((r) => r.id === id) ?? null,
 
   save: (rating: Rating): Rating => {
     const ratings = getAll();
