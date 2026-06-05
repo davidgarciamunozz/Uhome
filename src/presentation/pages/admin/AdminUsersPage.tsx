@@ -11,6 +11,8 @@ export default function AdminUsersPage() {
   const [editName, setEditName] = useState('');
   const [editEmail, setEditEmail] = useState('');
   const showToast = useToast();
+  const PAGE_SIZE = 10;
+  const [page, setPage] = useState(1);
 
   const load = useCallback(() => {
     const all = UserRepository.findAll()
@@ -22,6 +24,7 @@ export default function AdminUsersPage() {
   }, [filter]);
 
   useEffect(() => { load(); }, [load]);
+  useEffect(() => { setPage(1); }, [filter]);
 
   const handleToggleBlock = (u: User) => {
     const action = u.blocked ? 'desbloquear' : 'bloquear';
@@ -54,6 +57,9 @@ export default function AdminUsersPage() {
   };
 
   const roleLabel: Record<string, string> = { student: 'Estudiante', owner: 'Propietario' };
+
+  const totalPages = Math.ceil(users.length / PAGE_SIZE);
+  const paged = users.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
     <AdminLayout>
@@ -100,23 +106,38 @@ export default function AdminUsersPage() {
           </div>
         ) : (
           <div className="admin-table">
-            {users.map((u) => (
-              <div key={u.id} className="admin-table-row" style={{ gridTemplateColumns: '1fr 1fr 120px 160px' }}>
+            <div className="admin-table-header" style={{ gridTemplateColumns: '2fr 2fr 1fr 1fr 1fr 1.5fr' }}>
+              <span>Nombre</span><span>Email</span><span>Rol</span><span>Plan</span><span>Estado</span><span>Acciones</span>
+            </div>
+            {paged.map((u) => (
+              <div key={u.id} className="admin-table-row" style={{ gridTemplateColumns: '2fr 2fr 1fr 1fr 1fr 1.5fr' }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <div className="avatar avatar-sm">{u.name.charAt(0)}</div>
-                    <div>
-                      <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{u.name}</div>
-                      <div style={{ fontSize: '0.75rem', color: 'var(--gray-400)' }}>{u.email}</div>
-                    </div>
+                    <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{u.name}</div>
                   </div>
                 </div>
                 <div>
-                  <span className="badge badge-gray">{roleLabel[u.role] || u.role}</span>
+                  <div style={{ fontSize: '0.875rem' }}>{u.email}</div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--gray-400)', marginTop: '0.25rem' }}>
                     Desde {new Date(u.createdAt).toLocaleDateString('es-CO')}
                   </div>
                 </div>
+                <div>
+                  <span className="badge badge-gray">{roleLabel[u.role] || u.role}</span>
+                </div>
+                <span>
+                  <span style={{
+                    fontSize: '0.72rem',
+                    fontWeight: 600,
+                    padding: '0.15rem 0.5rem',
+                    borderRadius: '999px',
+                    background: u.plan === 'premium' ? 'var(--primary-soft, #f0f4ff)' : 'var(--gray-100)',
+                    color: u.plan === 'premium' ? 'var(--primary)' : 'var(--gray-500)',
+                  }}>
+                    {u.plan === 'premium' ? 'Premium' : 'Gratuito'}
+                  </span>
+                </span>
                 <div>
                   {u.blocked
                     ? <span className="status-badge status-blocked">Bloqueado</span>
@@ -134,6 +155,19 @@ export default function AdminUsersPage() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+        {totalPages > 1 && (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.75rem', marginTop: '1.5rem' }}>
+            <button className="btn btn-outline btn-sm" onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1}>
+              Anterior
+            </button>
+            <span style={{ fontSize: '0.875rem', color: 'var(--gray-600)' }}>
+              Página {page} de {totalPages}
+            </span>
+            <button className="btn btn-outline btn-sm" onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages}>
+              Siguiente
+            </button>
           </div>
         )}
       </div>
