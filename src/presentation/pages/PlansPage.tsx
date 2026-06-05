@@ -11,6 +11,31 @@ const COP = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP',
 
 type PayStep = 'confirm' | 'pay' | 'done';
 
+const DEFAULT_PLANS: Plan[] = [
+  {
+    id: 'plan-free',
+    name: 'Gratuito',
+    price: 0,
+    durationDays: 0,
+    maxContacts: 3,
+    maxListings: 3,
+    canFeature: false,
+    active: true,
+    createdAt: '2025-01-01T00:00:00.000Z',
+  },
+  {
+    id: 'plan-premium',
+    name: 'Premium',
+    price: 50000,
+    durationDays: 30,
+    maxContacts: null,
+    maxListings: null,
+    canFeature: true,
+    active: true,
+    createdAt: '2025-01-01T00:00:00.000Z',
+  },
+];
+
 const PLAN_BENEFITS: Record<string, string[]> = {
   'plan-free': [
     'Hasta 3 contactos por día',
@@ -46,11 +71,12 @@ export default function PlansPage() {
   const [cardCvv, setCardCvv] = useState('');
 
   useEffect(() => {
-    if (!user) { navigate('/login'); return; }
-    setPlans(PlanRepository.findActive());
-  }, [user, navigate]);
+    const stored = PlanRepository.findActive();
+    setPlans(stored.length > 0 ? stored : DEFAULT_PLANS);
+  }, []);
 
   const openUpgrade = (plan: Plan) => {
+    if (!user) { navigate('/login'); return; }
     setUpgradeTarget(plan);
     setPayStep('confirm');
     setCardNum(''); setCardExp(''); setCardCvv('');

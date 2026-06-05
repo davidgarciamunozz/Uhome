@@ -20,8 +20,9 @@ export default function Nav() {
             <>
               <Link to="/search">Buscar vivienda</Link>
               <Link to="/roomies">Buscar roomie</Link>
+              <Link to="/plans" className="btn btn-primary btn-sm">Planes</Link>
               <Link to="/login" className="btn btn-outline btn-sm">Ingresar</Link>
-              <Link to="/register" className="btn btn-primary btn-sm">Registrarse</Link>
+              <Link to="/register" className="btn btn-outline btn-sm">Registrarse</Link>
             </>
           ) : isAdmin(user) ? (
             <>
