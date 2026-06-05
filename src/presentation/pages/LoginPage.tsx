@@ -78,11 +78,7 @@ export default function LoginPage() {
           <Link to="/register">Regístrate</Link>
         </div>
 
-        <div className="demo-hint">
-          <p className="text-xs text-gray">Cuentas demo:</p>
-          <p className="text-xs text-gray">Estudiante: maria.garcia@universidad.edu / Password1</p>
-          <p className="text-xs text-gray">Propietario: lucia.m@gmail.com / Password1</p>
-        </div>
+
       </div>
     </div>
   );
