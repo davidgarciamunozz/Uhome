@@ -26,6 +26,7 @@ export default function ListingDetailPage() {
   const [reportDesc, setReportDesc] = useState('');
   const [ratingSummary, setRatingSummary] = useState<{ average: number; count: number }>({ average: 0, count: 0 });
   const [freemiumMsg, setFreemiumMsg] = useState<string | null>(null);
+  const [activeImg, setActiveImg] = useState(0);
   const { user } = useSession();
   const showToast = useToast();
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ export default function ListingDetailPage() {
     const l = ListingRepository.findById(id);
     if (!l) { navigate('/search'); return; }
     setListing(l);
+    setActiveImg(0);
     setOwner(UserRepository.findById(l.ownerId));
     const summary = getUserRatingSummary(l.ownerId);
     setRatingSummary({ average: summary.average, count: summary.count });
@@ -89,8 +91,8 @@ export default function ListingDetailPage() {
         {/* Images */}
         <div>
           <div className="listing-detail-image">
-            {listing.images[0] ? (
-              <img src={listing.images[0]} alt={listing.title} />
+            {listing.images[activeImg] ? (
+              <img src={listing.images[activeImg]} alt={listing.title} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }} />
             ) : (
               <div className={`listing-thumb-placeholder listing-thumb-${listing.type === 'habitación' ? 'room' : 'apt'}`}
                 style={{ height: '100%', fontSize: '4rem' }}>
@@ -99,9 +101,24 @@ export default function ListingDetailPage() {
             )}
           </div>
           {listing.images.length > 1 && (
-            <div className="listing-thumbs">
-              {listing.images.slice(1).map((img, i) => (
-                <img key={i} src={img} alt="" className="listing-thumb-small" />
+            <div className="listing-thumbs" style={{ marginTop: '0.75rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              {listing.images.map((img, i) => (
+                <img
+                  key={i}
+                  src={img}
+                  alt=""
+                  onClick={() => setActiveImg(i)}
+                  style={{
+                    width: 72,
+                    height: 56,
+                    objectFit: 'cover',
+                    borderRadius: 'var(--radius)',
+                    cursor: 'pointer',
+                    border: `2px solid ${i === activeImg ? 'var(--primary)' : 'transparent'}`,
+                    opacity: i === activeImg ? 1 : 0.7,
+                    transition: 'opacity 0.15s, border-color 0.15s',
+                  }}
+                />
               ))}
             </div>
           )}
