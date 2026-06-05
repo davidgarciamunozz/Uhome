@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { path: '/admin/users', label: 'Usuarios', icon: '👥' },
   { path: '/admin/metrics', label: 'Métricas', icon: '📈' },
   { path: '/admin/revenue', label: 'Ingresos', icon: '💰' },
+  { path: '/admin/plans', label: 'Planes', icon: '💳' },
 ];
 
 interface Props { children: ReactNode }
