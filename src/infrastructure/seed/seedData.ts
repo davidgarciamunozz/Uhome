@@ -9,7 +9,7 @@ import { RoomieRepository } from '../repositories/RoomieRepository';
 import { MessageRepository } from '../repositories/MessageRepository';
 import { PlanRepository } from '../repositories/PlanRepository';
 
-const SEED_KEY = 'uhome_seeded_v4';
+const SEED_KEY = 'uhome_seeded_v5';
 
 const USERS: User[] = [
   {
@@ -94,10 +94,10 @@ const LISTINGS: Listing[] = [
     description: 'Estudio minimalista en torre residencial con cocina integrada, mesón de trabajo y zona de comedor para dos personas. Decoración moderna en tonos neutros, totalmente amoblado. Edificio con portería 24h y zona de lavandería. A 5 min caminando de la zona rosa de Granada y a 12 min de la Universidad Icesi. Servicios incluidos.',
     services: { internet: true, water: true, electricity: true, gas: false },
     images: [
-      '/images/apt0/Screenshot%202026-06-04%20at%2010.32.50%20PM.png',
-      '/images/apt0/Screenshot%202026-06-04%20at%2010.33.02%20PM.png',
-      '/images/apt0/Screenshot%202026-06-04%20at%2010.32.57%20PM.png',
-      '/images/apt0/Screenshot%202026-06-04%20at%2010.33.08%20PM.png',
+      '/images/apt0/Screenshot-2026-06-04-at-10.32.50-PM.png',
+      '/images/apt0/Screenshot-2026-06-04-at-10.33.02-PM.png',
+      '/images/apt0/Screenshot-2026-06-04-at-10.32.57-PM.png',
+      '/images/apt0/Screenshot-2026-06-04-at-10.33.08-PM.png',
     ],
     status: 'published',
     featured: true,
@@ -119,9 +119,9 @@ const LISTINGS: Listing[] = [
     description: 'Espectacular apartamento en piso 9 con ventanales de piso a techo y vista panorámica del skyline de Cali. Sala-comedor amplio, luz natural todo el día, pisos en madera laminada. Ideal para dos estudiantes exigentes. Edificio con gimnasio, parqueadero y seguridad 24h. A 8 min de la Pontificia Universidad Javeriana Cali.',
     services: { internet: true, water: true, electricity: true, gas: true },
     images: [
-      '/images/apt1/Screenshot%202026-06-04%20at%2010.33.21%20PM.png',
-      '/images/apt1/Screenshot%202026-06-04%20at%2010.33.25%20PM.png',
-      '/images/apt1/Screenshot%202026-06-04%20at%2010.33.33%20PM.png',
+      '/images/apt1/Screenshot-2026-06-04-at-10.33.21-PM.png',
+      '/images/apt1/Screenshot-2026-06-04-at-10.33.25-PM.png',
+      '/images/apt1/Screenshot-2026-06-04-at-10.33.33-PM.png',
     ],
     status: 'published',
     createdAt: '2025-02-05T10:00:00.000Z',
@@ -141,9 +141,9 @@ const LISTINGS: Listing[] = [
     description: 'Apartamento en torre residencial del sur de Cali con cocina de diseño, iluminación ambiental LED y vista nocturna de la ciudad. Acabados en madera y acero, electrodomésticos de alta gama. Zonas comunes con piscina y BBQ. A 5 min de la Universidad Icesi y centro comercial Jardín Plaza.',
     services: { internet: true, water: true, electricity: true, gas: true },
     images: [
-      '/images/apt2/Screenshot%202026-06-04%20at%2010.33.41%20PM.png',
-      '/images/apt2/Screenshot%202026-06-04%20at%2010.33.45%20PM.png',
-      '/images/apt2/Screenshot%202026-06-04%20at%2010.33.49%20PM.png',
+      '/images/apt2/Screenshot-2026-06-04-at-10.33.41-PM.png',
+      '/images/apt2/Screenshot-2026-06-04-at-10.33.45-PM.png',
+      '/images/apt2/Screenshot-2026-06-04-at-10.33.49-PM.png',
     ],
     status: 'published',
     createdAt: '2025-02-10T10:00:00.000Z',
@@ -163,9 +163,9 @@ const LISTINGS: Listing[] = [
     description: 'Habitación en casa colonial restaurada del barrio más bohemio de Cali. Baño privado, estantería de diseño industrial, escritorio de trabajo y buena luz natural. A media cuadra del Parque San Antonio y la zona de cafés y galerías. Ideal para estudiantes de arte, diseño, comunicación o arquitectura. Ambiente tranquilo y creativo.',
     services: { internet: true, water: true, electricity: true, gas: false },
     images: [
-      '/images/apt3/Screenshot%202026-06-04%20at%2010.35.34%20PM.png',
-      '/images/apt3/Screenshot%202026-06-04%20at%2010.35.45%20PM.png',
-      '/images/apt3/Screenshot%202026-06-04%20at%2010.35.50%20PM.png',
+      '/images/apt3/Screenshot-2026-06-04-at-10.35.34-PM.png',
+      '/images/apt3/Screenshot-2026-06-04-at-10.35.45-PM.png',
+      '/images/apt3/Screenshot-2026-06-04-at-10.35.50-PM.png',
     ],
     status: 'published',
     createdAt: '2025-02-15T10:00:00.000Z',
@@ -185,9 +185,9 @@ const LISTINGS: Listing[] = [
     description: 'Apartamento completamente amoblado con aire acondicionado split, Smart TV 43" y sala con sofá en L. Cocina equipada con nevera, microondas y estufa eléctrica. Edificio con portería, bicicletero y zona de lavandería. A 8 min de la Universidad Autónoma de Occidente. Tranquilo, seguro y con buena conexión a transporte masivo.',
     services: { internet: true, water: true, electricity: true, gas: true },
     images: [
-      '/images/apt4/Screenshot%202026-06-04%20at%2010.39.03%20PM.png',
-      '/images/apt4/Screenshot%202026-06-04%20at%2010.39.10%20PM.png',
-      '/images/apt4/Screenshot%202026-06-04%20at%2010.39.18%20PM.png',
+      '/images/apt4/Screenshot-2026-06-04-at-10.39.03-PM.png',
+      '/images/apt4/Screenshot-2026-06-04-at-10.39.10-PM.png',
+      '/images/apt4/Screenshot-2026-06-04-at-10.39.18-PM.png',
     ],
     status: 'published',
     createdAt: '2025-02-20T10:00:00.000Z',
@@ -207,9 +207,9 @@ const LISTINGS: Listing[] = [
     description: 'Apartamento con diseño open-concept de última tendencia: cocina con isla en cuarzo blanco, canecas en madera natural e iluminación de diseño con bombillos Edison. Sala y comedor integrados, espacio luminoso y moderno. Edificio nuevo con ascensor, portería y parqueadero. A 10 min del centro comercial Chipichape. Ideal para dos estudiantes.',
     services: { internet: true, water: true, electricity: true, gas: true },
     images: [
-      '/images/apt5/Screenshot%202026-06-04%20at%2010.39.58%20PM.png',
-      '/images/apt5/Screenshot%202026-06-04%20at%2010.40.02%20PM.png',
-      '/images/apt5/Screenshot%202026-06-04%20at%2010.40.13%20PM.png',
+      '/images/apt5/Screenshot-2026-06-04-at-10.39.58-PM.png',
+      '/images/apt5/Screenshot-2026-06-04-at-10.40.02-PM.png',
+      '/images/apt5/Screenshot-2026-06-04-at-10.40.13-PM.png',
     ],
     status: 'published',
     createdAt: '2025-02-25T10:00:00.000Z',
@@ -229,9 +229,9 @@ const LISTINGS: Listing[] = [
     description: 'Segunda unidad disponible en el mismo edificio que la publicación anterior, en piso 5 con mejor ventilación. Exactamente la misma distribución: cocina con isla de cuarzo, espacio open-concept y sala comedor integrados. Disponible de inmediato. Edificio con ascensor, portería y parqueadero de bicicletas.',
     services: { internet: true, water: true, electricity: true, gas: true },
     images: [
-      '/images/apt6/Screenshot%202026-06-04%20at%2010.39.58%20PM.png',
-      '/images/apt6/Screenshot%202026-06-04%20at%2010.40.02%20PM.png',
-      '/images/apt6/Screenshot%202026-06-04%20at%2010.40.13%20PM.png',
+      '/images/apt6/Screenshot-2026-06-04-at-10.39.58-PM.png',
+      '/images/apt6/Screenshot-2026-06-04-at-10.40.02-PM.png',
+      '/images/apt6/Screenshot-2026-06-04-at-10.40.13-PM.png',
     ],
     status: 'published',
     createdAt: '2025-03-01T10:00:00.000Z',
@@ -251,9 +251,9 @@ const LISTINGS: Listing[] = [
     description: 'Apartamento de lujo en conjunto residencial cerrado con zonas sociales de primer nivel: terraza social con asador BBQ, jardín comunal, salón de juegos y gym. Acabados en granito gris, cocina completamente dotada. Administración incluida en el canon. Seguridad 24h con vigilancia. A 5 min de Unicentro y Jardín Plaza. La mejor opción para estudiantes que buscan calidad de vida.',
     services: { internet: true, water: true, electricity: true, gas: true },
     images: [
-      '/images/apt7/Screenshot%202026-06-04%20at%2010.40.41%20PM.png',
-      '/images/apt7/Screenshot%202026-06-04%20at%2010.40.45%20PM.png',
-      '/images/apt7/Screenshot%202026-06-04%20at%2010.40.52%20PM.png',
+      '/images/apt7/Screenshot-2026-06-04-at-10.40.41-PM.png',
+      '/images/apt7/Screenshot-2026-06-04-at-10.40.45-PM.png',
+      '/images/apt7/Screenshot-2026-06-04-at-10.40.52-PM.png',
     ],
     status: 'published',
     createdAt: '2025-03-05T10:00:00.000Z',
