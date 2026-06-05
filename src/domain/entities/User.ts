@@ -20,6 +20,7 @@ export interface BaseUser {
   email: string;
   password: string;
   role: UserRole;
+  plan?: 'free' | 'premium';
   avatar?: string;
   description?: string;
   createdAt: string;
@@ -33,6 +34,8 @@ export interface Student extends BaseUser {
   age?: number;
   budget: Budget;
   preferences: StudentPreferences;
+  contactsToday?: number;
+  contactsResetDate?: string;
 }
 
 export interface Owner extends BaseUser {
