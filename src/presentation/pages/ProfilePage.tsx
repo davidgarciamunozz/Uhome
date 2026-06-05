@@ -16,22 +16,24 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   const fileRef = useRef<HTMLInputElement>(null);
 
-  if (!user) { navigate('/login'); return null; }
-
   const [editing, setEditing] = useState(false);
-  const [form, setForm] = useState({
-    name: user.name,
-    description: user.description || '',
-    avatar: user.avatar || '',
-  });
+  const [form, setForm] = useState({ name: '', description: '', avatar: '' });
   const [givenRatings, setGivenRatings] = useState<Rating[]>([]);
   const [editingRating, setEditingRating] = useState<Rating | null>(null);
   const [editScore, setEditScore] = useState(5);
   const [editComment, setEditComment] = useState('');
 
   useEffect(() => {
-    setGivenRatings(RatingRepository.findByFromUser(user.id));
-  }, [user.id]);
+    if (user) {
+      setForm({ name: user.name, description: user.description || '', avatar: user.avatar || '' });
+    }
+  }, [user?.id]);
+
+  useEffect(() => {
+    if (user) setGivenRatings(RatingRepository.findByFromUser(user.id));
+  }, [user?.id]);
+
+  if (!user) { navigate('/login'); return null; }
 
   const ratingSummary = getUserRatingSummary(user.id);
   const roomieProfile = isStudent(user) ? RoomieRepository.findByUser(user.id) : null;
