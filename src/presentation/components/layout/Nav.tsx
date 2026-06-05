@@ -34,6 +34,7 @@ export default function Nav() {
               <Link to="/publish">Publicar</Link>
               <Link to="/messages">Mensajes</Link>
               <Link to="/profile">Perfil</Link>
+              <Link to="/plans">Planes</Link>
               <button className="btn btn-outline btn-sm" onClick={handleLogout}>Salir</button>
             </>
           ) : (
@@ -42,6 +43,7 @@ export default function Nav() {
               <Link to="/roomies">Roomies</Link>
               <Link to="/messages">Mensajes</Link>
               <Link to="/profile">Perfil</Link>
+              <Link to="/plans">Planes</Link>
               <button className="btn btn-outline btn-sm" onClick={handleLogout}>Salir</button>
             </>
           )}

@@ -21,6 +21,7 @@ import AdminListingsPage from './presentation/pages/admin/AdminListingsPage';
 import AdminUsersPage from './presentation/pages/admin/AdminUsersPage';
 import AdminMetricsPage from './presentation/pages/admin/AdminMetricsPage';
 import AdminRevenuePage from './presentation/pages/admin/AdminRevenuePage';
+import PlansPage from './presentation/pages/PlansPage';
 
 seedIfNeeded();
 
@@ -53,6 +54,7 @@ export default function App() {
                     <Route path="/admin/users" element={<AdminUsersPage />} />
                     <Route path="/admin/metrics" element={<AdminMetricsPage />} />
                     <Route path="/admin/revenue" element={<AdminRevenuePage />} />
+                    <Route path="/plans" element={<PlansPage />} />
                   </Routes>
                 </Layout>
               }
