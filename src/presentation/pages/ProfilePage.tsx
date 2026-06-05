@@ -1,8 +1,10 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { UserRepository } from '../../infrastructure/repositories/UserRepository';
 import { RoomieRepository } from '../../infrastructure/repositories/RoomieRepository';
-import { getUserRatingSummary } from '../../application/social/RateUserUseCase';
+import { getUserRatingSummary, editRating } from '../../application/social/RateUserUseCase';
+import { RatingRepository } from '../../infrastructure/repositories/RatingRepository';
+import type { Rating } from '../../domain/entities/Rating';
 import { useSession } from '../context/SessionContext';
 import { useToast } from '../context/ToastContext';
 import Stars from '../components/ui/Stars';
@@ -22,6 +24,14 @@ export default function ProfilePage() {
     description: user.description || '',
     avatar: user.avatar || '',
   });
+  const [givenRatings, setGivenRatings] = useState<Rating[]>([]);
+  const [editingRating, setEditingRating] = useState<Rating | null>(null);
+  const [editScore, setEditScore] = useState(5);
+  const [editComment, setEditComment] = useState('');
+
+  useEffect(() => {
+    setGivenRatings(RatingRepository.findByFromUser(user.id));
+  }, [user.id]);
 
   const ratingSummary = getUserRatingSummary(user.id);
   const roomieProfile = isStudent(user) ? RoomieRepository.findByUser(user.id) : null;
@@ -42,6 +52,18 @@ export default function ProfilePage() {
     refreshUser();
     showToast('Cambios guardados', 'success');
     setEditing(false);
+  };
+
+  const handleEditRating = () => {
+    if (!editingRating) return;
+    try {
+      editRating(editingRating.id, user.id, editScore, editComment);
+      showToast('Calificación actualizada', 'success');
+      setEditingRating(null);
+      setGivenRatings(RatingRepository.findByFromUser(user.id));
+    } catch (e: any) {
+      showToast(e.message || 'Error al editar', 'error');
+    }
   };
 
   return (
@@ -144,6 +166,71 @@ export default function ProfilePage() {
               <Link to="/roomie-profile/edit" className="btn btn-primary btn-sm">Crear perfil de roomie</Link>
             </div>
           )}
+        </div>
+      )}
+
+      {givenRatings.length > 0 && (
+        <div className="profile-section" style={{ marginTop: '1.5rem' }}>
+          <h3 style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '1rem' }}>
+            Calificaciones que has dado
+          </h3>
+          {givenRatings.map((r) => {
+            const toUser = UserRepository.findById(r.toUserId);
+            return (
+              <div key={r.id} style={{ borderBottom: '1px solid var(--gray-100)', paddingBottom: '0.75rem', marginBottom: '0.75rem' }}>
+                {editingRating?.id === r.id ? (
+                  <div>
+                    <p style={{ fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.5rem' }}>
+                      Editando calificación a {toUser?.name ?? 'usuario'}
+                    </p>
+                    <div style={{ display: 'flex', gap: '0.25rem', marginBottom: '0.5rem' }}>
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <button
+                          key={s}
+                          onClick={() => setEditScore(s)}
+                          style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.2rem', opacity: s <= editScore ? 1 : 0.3 }}
+                        >
+                          ★
+                        </button>
+                      ))}
+                    </div>
+                    <textarea
+                      className="form-textarea"
+                      rows={2}
+                      value={editComment}
+                      onChange={(e) => setEditComment(e.target.value)}
+                      style={{ marginBottom: '0.5rem' }}
+                    />
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                      <button className="btn btn-primary btn-sm" onClick={handleEditRating}>Guardar</button>
+                      <button className="btn btn-outline btn-sm" onClick={() => setEditingRating(null)}>Cancelar</button>
+                    </div>
+                  </div>
+                ) : (
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <p style={{ fontSize: '0.8rem', fontWeight: 600 }}>
+                        Para: {toUser?.name ?? 'usuario eliminado'}
+                      </p>
+                      <p style={{ fontSize: '0.8rem', color: 'var(--yellow-dark, #92400e)' }}>
+                        {'★'.repeat(r.score)}{'☆'.repeat(5 - r.score)}
+                      </p>
+                      {r.comment && (
+                        <p style={{ fontSize: '0.8rem', color: 'var(--gray-600)', marginTop: '0.25rem' }}>{r.comment}</p>
+                      )}
+                    </div>
+                    <button
+                      className="btn btn-ghost btn-sm"
+                      style={{ fontSize: '0.75rem' }}
+                      onClick={() => { setEditingRating(r); setEditScore(r.score); setEditComment(r.comment); }}
+                    >
+                      Editar
+                    </button>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
