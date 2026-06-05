@@ -1,4 +1,7 @@
 import AdminLayout from './AdminLayout';
+import { useEffect, useState } from 'react';
+import { UserRepository } from '../../../infrastructure/repositories/UserRepository';
+import { PlanRepository } from '../../../infrastructure/repositories/PlanRepository';
 
 const COP = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
 
@@ -19,6 +22,16 @@ const BREAKDOWN = [
 ];
 
 export default function AdminRevenuePage() {
+  const [premiumCount, setPremiumCount] = useState(0);
+  const [premiumPrice, setPremiumPrice] = useState(50000);
+
+  useEffect(() => {
+    const users = UserRepository.findAll().filter((u) => u.role !== 'admin');
+    setPremiumCount(users.filter((u) => u.plan === 'premium').length);
+    const premiumPlan = PlanRepository.findAll().find((p) => p.price > 0 && p.active);
+    if (premiumPlan) setPremiumPrice(premiumPlan.price);
+  }, []);
+
   const totalRevenue = MONTHLY_REVENUE.reduce((s, m) => s + m.total, 0);
   const thisMonth = MONTHLY_REVENUE[MONTHLY_REVENUE.length - 1];
   const lastMonth = MONTHLY_REVENUE[MONTHLY_REVENUE.length - 2];
@@ -53,6 +66,14 @@ export default function AdminRevenuePage() {
             <div className="admin-stat-icon">⭐</div>
             <div className="admin-stat-value">{COP.format(thisMonth.featured)}</div>
             <div className="admin-stat-label">Ingresos por destacados</div>
+          </div>
+          <div className="admin-stat">
+            <div className="admin-stat-icon">👑</div>
+            <div className="admin-stat-value">{premiumCount}</div>
+            <div className="admin-stat-label">Suscriptores premium activos</div>
+            <div style={{ fontSize: '0.7rem', color: 'var(--gray-400)', marginTop: '0.25rem' }}>
+              {COP.format(premiumCount * premiumPrice)}/mes estimado
+            </div>
           </div>
         </div>
 
