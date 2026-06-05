@@ -3,13 +3,15 @@ import type { Listing } from '../../domain/entities/Listing';
 import type { RoomieProfile } from '../../domain/entities/RoomieProfile';
 import type { Message } from '../../domain/entities/Message';
 import type { Plan } from '../../domain/entities/Plan';
+import type { Rating } from '../../domain/entities/Rating';
 import { UserRepository } from '../repositories/UserRepository';
 import { ListingRepository } from '../repositories/ListingRepository';
 import { RoomieRepository } from '../repositories/RoomieRepository';
 import { MessageRepository } from '../repositories/MessageRepository';
 import { PlanRepository } from '../repositories/PlanRepository';
+import { RatingRepository } from '../repositories/RatingRepository';
 
-const SEED_KEY = 'uhome_seeded_v6';
+const SEED_KEY = 'uhome_seeded_v7';
 
 const USERS: User[] = [
   {
@@ -67,6 +69,51 @@ const USERS: User[] = [
     description: 'Propietario en Ciudad Jardín, Cali. Apartamentos bien ubicados para estudiantes.',
     plan: 'free',
     createdAt: '2025-01-12T10:00:00.000Z',
+  },
+  {
+    id: 'student-3',
+    name: 'Valentina López',
+    email: 'valentina.lopez@univalle.edu.co',
+    password: 'Password1',
+    role: 'student',
+    plan: 'free',
+    university: 'Universidad del Valle',
+    career: 'Ingeniería Industrial',
+    age: 20,
+    budget: { min: 500000, max: 900000 },
+    preferences: { smoker: false, pets: false, schedule: 'tranquilo' },
+    description: 'Estudiante de ingeniería, ordenada y responsable. Busco habitación cerca de Univalle.',
+    createdAt: '2025-03-01T10:00:00.000Z',
+  },
+  {
+    id: 'student-4',
+    name: 'Sebastián Torres',
+    email: 'sebastian.torres@icesi.edu.co',
+    password: 'Password1',
+    role: 'student',
+    plan: 'free',
+    university: 'Universidad Icesi',
+    career: 'Diseño de Comunicación Visual',
+    age: 23,
+    budget: { min: 700000, max: 1400000 },
+    preferences: { smoker: false, pets: true, schedule: 'social' },
+    description: 'Diseñador en formación, creativo y sociable. Tengo un gato tranquilo.',
+    createdAt: '2025-03-10T10:00:00.000Z',
+  },
+  {
+    id: 'student-5',
+    name: 'Camila Herrera',
+    email: 'camila.herrera@javeriana.edu.co',
+    password: 'Password1',
+    role: 'student',
+    plan: 'free',
+    university: 'Pontificia Universidad Javeriana Cali',
+    career: 'Medicina',
+    age: 22,
+    budget: { min: 800000, max: 1800000 },
+    preferences: { smoker: false, pets: false, schedule: 'tranquilo' },
+    description: 'Estudiante de medicina, busco lugar tranquilo y bien ubicado cerca de la Javeriana.',
+    createdAt: '2025-03-15T10:00:00.000Z',
   },
   {
     id: 'admin-1',
@@ -260,6 +307,81 @@ const LISTINGS: Listing[] = [
   },
 ];
 
+const RATINGS: Rating[] = [
+  {
+    id: 'rating-1',
+    fromUserId: 'student-1',
+    toUserId: 'owner-1',
+    score: 5,
+    comment: 'Lucía es una propietaria excelente. El estudio en Ciudad Jardín estaba exactamente como se mostraba, muy limpio y bien equipado. Respondió todas mis dudas de inmediato y el proceso fue muy fácil.',
+    createdAt: '2025-04-10T10:00:00.000Z',
+  },
+  {
+    id: 'rating-2',
+    fromUserId: 'student-2',
+    toUserId: 'owner-1',
+    score: 4,
+    comment: 'Muy buena experiencia. El apartamento en Pance tiene una vista espectacular hacia los cerros. La propietaria estuvo disponible para cualquier inconveniente y lo resolvió rápidamente.',
+    createdAt: '2025-04-15T10:00:00.000Z',
+  },
+  {
+    id: 'rating-3',
+    fromUserId: 'student-3',
+    toUserId: 'owner-1',
+    score: 5,
+    comment: 'El mejor lugar que he arrendado desde que llegué a Cali. Las zonas sociales del conjunto son increíbles y el precio es justo para todo lo que incluye. 100% recomendado.',
+    createdAt: '2025-05-02T10:00:00.000Z',
+  },
+  {
+    id: 'rating-4',
+    fromUserId: 'student-4',
+    toUserId: 'owner-1',
+    score: 5,
+    comment: 'Superó mis expectativas. Ciudad Jardín es el sector perfecto para estudiar, tranquilo y bien conectado. Lucía es muy profesional y el apartamento está impecable.',
+    createdAt: '2025-05-20T10:00:00.000Z',
+  },
+  {
+    id: 'rating-5',
+    fromUserId: 'student-5',
+    toUserId: 'owner-1',
+    score: 4,
+    comment: 'Buena propietaria, muy organizada. El lugar estaba perfecto al momento de la entrega y los servicios funcionaban todos sin problema.',
+    createdAt: '2025-06-01T10:00:00.000Z',
+  },
+  {
+    id: 'rating-6',
+    fromUserId: 'student-1',
+    toUserId: 'owner-2',
+    score: 4,
+    comment: 'Jorge es un arrendador responsable y puntual. La habitación en Bochalema es muy tranquila, ideal para estudiar. El sector es seguro y hay buena conexión de transporte.',
+    createdAt: '2025-04-20T10:00:00.000Z',
+  },
+  {
+    id: 'rating-7',
+    fromUserId: 'student-3',
+    toUserId: 'owner-2',
+    score: 3,
+    comment: 'El apartamento está bien ubicado en Jamundí pero algunos electrodomésticos necesitaban mantenimiento al llegar. Jorge los arregló en menos de 24 horas, eso se valora.',
+    createdAt: '2025-05-08T10:00:00.000Z',
+  },
+  {
+    id: 'rating-8',
+    fromUserId: 'student-4',
+    toUserId: 'owner-2',
+    score: 4,
+    comment: 'Buena relación calidad-precio. El sector de Jamundí es muy seguro, silencioso y perfecto para concentrarse. Jorge siempre respondió rápido a los mensajes.',
+    createdAt: '2025-05-25T10:00:00.000Z',
+  },
+  {
+    id: 'rating-9',
+    fromUserId: 'student-5',
+    toUserId: 'owner-2',
+    score: 5,
+    comment: '¡Excelente! El apartamento open-concept es hermoso, exactamente como las fotos. Jorge fue muy atento durante todo el proceso de arrendamiento. Lo recomiendo totalmente.',
+    createdAt: '2025-06-05T10:00:00.000Z',
+  },
+];
+
 const PLANS: Plan[] = [
   {
     id: 'plan-free',
@@ -340,5 +462,6 @@ export function seedIfNeeded(): void {
   PlanRepository.seed(PLANS);
   RoomieRepository.seed(ROOMIE_PROFILES);
   MessageRepository.seed(MESSAGES);
+  RatingRepository.seed(RATINGS);
   localStorage.setItem(SEED_KEY, '1');
 }

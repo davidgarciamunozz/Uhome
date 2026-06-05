@@ -11,6 +11,7 @@ import { useToast } from '../context/ToastContext';
 import Modal from '../components/ui/Modal';
 import Stars from '../components/ui/Stars';
 import type { ReportReason } from '../../domain/entities/Report';
+import type { Rating } from '../../domain/entities/Rating';
 import { isStudent } from '../../domain/entities/User';
 import { canContact } from '../../application/freemium/CheckContactLimitUseCase';
 import FreemiumGate from '../components/ui/FreemiumGate';
@@ -24,7 +25,7 @@ export default function ListingDetailPage() {
   const [reportOpen, setReportOpen] = useState(false);
   const [reportReason, setReportReason] = useState<ReportReason>('spam');
   const [reportDesc, setReportDesc] = useState('');
-  const [ratingSummary, setRatingSummary] = useState<{ average: number; count: number }>({ average: 0, count: 0 });
+  const [ratingSummary, setRatingSummary] = useState<{ average: number; count: number; ratings: Rating[] }>({ average: 0, count: 0, ratings: [] });
   const [freemiumMsg, setFreemiumMsg] = useState<string | null>(null);
   const [activeImg, setActiveImg] = useState(0);
   const { user } = useSession();
@@ -39,7 +40,7 @@ export default function ListingDetailPage() {
     setActiveImg(0);
     setOwner(UserRepository.findById(l.ownerId));
     const summary = getUserRatingSummary(l.ownerId);
-    setRatingSummary({ average: summary.average, count: summary.count });
+    setRatingSummary({ average: summary.average, count: summary.count, ratings: summary.ratings });
   }, [id, navigate]);
 
   const handleContact = () => {
@@ -199,6 +200,49 @@ export default function ListingDetailPage() {
           </div>
         </div>
       </div>
+
+      {ratingSummary.ratings.length > 0 && (
+        <div style={{ marginTop: '2.5rem' }}>
+          <h2 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem' }}>
+            Reseñas del propietario
+            <span style={{ fontWeight: 400, color: 'var(--gray-400)', marginLeft: '0.5rem', fontSize: '0.875rem' }}>
+              ({ratingSummary.count})
+            </span>
+          </h2>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+            <Stars value={Math.round(ratingSummary.average)} size="sm" />
+            <span style={{ fontSize: '1.5rem', fontWeight: 800 }}>{ratingSummary.average}</span>
+            <span style={{ fontSize: '0.875rem', color: 'var(--gray-500)' }}>de 5</span>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
+            {ratingSummary.ratings.map((r) => {
+              const reviewer = UserRepository.findById(r.fromUserId);
+              return (
+                <div key={r.id} className="card" style={{ padding: '1.25rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+                    <div className="avatar avatar-sm" style={{ flexShrink: 0 }}>
+                      {reviewer?.avatar
+                        ? <img src={reviewer.avatar} alt={reviewer.name} />
+                        : <span>{reviewer?.name?.charAt(0) ?? '?'}</span>
+                      }
+                    </div>
+                    <div>
+                      <p style={{ fontWeight: 600, fontSize: '0.875rem' }}>{reviewer?.name ?? 'Usuario'}</p>
+                      <p style={{ fontSize: '0.75rem', color: 'var(--gray-400)' }}>
+                        {new Date(r.createdAt).toLocaleDateString('es-CO', { year: 'numeric', month: 'long' })}
+                      </p>
+                    </div>
+                    <div style={{ marginLeft: 'auto' }}>
+                      <Stars value={r.score} size="sm" />
+                    </div>
+                  </div>
+                  <p style={{ fontSize: '0.875rem', color: 'var(--gray-700)', lineHeight: 1.6 }}>{r.comment}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       <Modal open={reportOpen} onClose={() => setReportOpen(false)} title="Reportar publicación">
         <div className="form-group">

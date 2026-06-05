@@ -37,4 +37,8 @@ export const RatingRepository = {
     saveAll(ratings);
     return rating;
   },
+
+  seed: (ratings: Rating[]): void => {
+    saveAll(ratings);
+  },
 };
